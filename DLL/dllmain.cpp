@@ -98,6 +98,11 @@ unsigned WINAPI RiffRepeaterThread() {
 	while (!D3DHooks::GameClosing) {
 		Sleep(100);
 
+		if (Settings::ReturnSettingValue("RRSpeedAboveOneHundred") != "on")
+		{
+			continue;
+		}
+
 		// Get SongKey for the song. We need this to reference the audio event by name.
 		const auto songKey = MemHelpers::GetSongKey();
 
@@ -120,7 +125,7 @@ unsigned WINAPI RiffRepeaterThread() {
 		
 		// If we have recently changed the Riff Repeater speed through the mod, then save the new value to a text file.
 		// This is primarily for streamers who want to make a custom overlay with the song speed.
-		if (Settings::ReturnSettingValue("RRSpeedAboveOneHundred") == "on" && MemHelpers::Contains(D3DHooks::currentMenu, fastRRModes) && saveNewRRSpeedToFile) {
+		if (MemHelpers::Contains(D3DHooks::currentMenu, fastRRModes) && saveNewRRSpeedToFile) {
 			std::ofstream rrText = std::ofstream("riff_repeater_speed.txt", std::ofstream::out);
 			rrText << std::to_string((int)realSongSpeed) << std::endl;
 			saveNewRRSpeedToFile = false;

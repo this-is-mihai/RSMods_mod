@@ -714,12 +714,15 @@ std::string MemHelpers::CurrentSelectedUser() {
 
 bool IsSongKeyStringValid(const char* str, size_t max_len)
 {
-	const char* end = (const char*)memchr(str, '\0', max_len);
-	if (end == NULL)
+	if (!str)
+		return false;
+
+	size_t strLen = strlen(str);
+	if (strLen <= 13 || strLen > max_len)
 		return false;
 
 	std::string playPrefix = "Play_";
-	return strlen(str) > 13 && strncmp(playPrefix.data(), str, sizeof(playPrefix));
+	return strncmp(playPrefix.data(), str, sizeof(playPrefix));
 }
 
 /// <summary>
