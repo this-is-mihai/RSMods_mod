@@ -271,7 +271,7 @@ namespace RSMods
         public static void IsVoid(string installLocation) // Anti-Piracy Check (False = Real, True = Pirated) || Modified from Beat Saber Mod Assistant
         {
             string reason = string.Empty;
-            bool fakeSteamApi = true;
+            bool fakeSteamApi = false;
             try
             {
                 X509Certificate2 cert = new X509Certificate2(X509Certificate.CreateFromSignedFile(Path.Combine(installLocation, "steam_api.dll")));
@@ -304,8 +304,9 @@ namespace RSMods
             if (areCrackIndicationsPresent || fakeSteamApi || isExeInvalid)
             {
                 MessageBox.Show($"Incompatible Rocksmith version detected! Only the newest RS version is supported - RSMods doesn't support pirated / stolen copies of Rocksmith 2014! {Environment.NewLine}Reason: {reason}", "Incompatible Rocksmith version", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Process.Start("https://store.steampowered.com/app/221680/");
-                Environment.Exit(1);
+                 MessageBox.Show($"anyhow... moving along");
+                // Process.Start("https://store.steampowered.com/app/221680/");
+                // Environment.Exit(1);
                 return;
             }
         }
